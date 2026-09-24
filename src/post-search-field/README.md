@@ -25,7 +25,7 @@ import { PostSearchField } from "@reaktiv/editor-components";
 | `help`                   | `string`   |                  | Help text below the field. |
 | `placeholder`            | `string`   | "Search..."      | Input placeholder. |
 | `hideLabelFromVision`    | `boolean`  | `false`          | Visually hides the label. |
-| `showInitialSuggestions` | `boolean`  | `true`           | Shows suggestions on focus, before anything is typed. |
+| `showInitialSuggestions` | `boolean`  | `false`          | Shows suggestions as soon as the field renders, before anything is typed. By default, the dropdown appears once a search returns results. |
 | `className`              | `string`   |                  | Additional class name. |
 
 ## `queryArgs`

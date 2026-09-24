@@ -30,7 +30,7 @@ import "./editor.scss";
  * @param {string}   props.help                   Help text below the field.
  * @param {string}   props.placeholder            Input placeholder.
  * @param {boolean}  props.hideLabelFromVision    Visually hides the label.
- * @param {boolean}  props.showInitialSuggestions Shows suggestions on focus, before anything is typed.
+ * @param {boolean}  props.showInitialSuggestions Shows suggestions as soon as the field renders, before anything is typed.
  * @param {string}   props.className              Additional class name.
  */
 const PostSearchField = ({
@@ -41,7 +41,7 @@ const PostSearchField = ({
 	help,
 	placeholder = __("Search...", "rkv-editor-components"),
 	hideLabelFromVision = false,
-	showInitialSuggestions = true,
+	showInitialSuggestions = false,
 	className,
 }) => {
 	const registry = useRegistry();

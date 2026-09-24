@@ -1,6 +1,13 @@
 // Outside LinkControl's popover the results render in the page flow, so give
 // them a dropdown-style surface.
 .rkv-post-search-field {
+	// The block editor sizes this input for LinkControl's 300px popover, which
+	// overflows the 280px block inspector sidebar.
+	.block-editor-url-input {
+		min-width: 0;
+		width: 100%;
+	}
+
 	.block-editor-link-control__search-results-wrapper {
 		position: relative;
 		background: #fff;

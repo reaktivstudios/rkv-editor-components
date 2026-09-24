@@ -39,6 +39,18 @@ npm test
 
 `build/` holds the Babel-compiled ES modules, with each component's `editor.scss` compiled to `editor.css` next to it. Component styles are named `editor.scss`, not `style.scss`, because `@wordpress/scripts` moves any `style.*` file into the block's front-end stylesheet. `build/` is regenerated on `npm publish`.
 
+### Storybook
+
+```bash
+npm run storybook
+```
+
+This opens Storybook at http://localhost:6006, with stories for each component (`*.stories.js`, next to the component). There's no WordPress site behind it: a fake REST API ([`.storybook/mock-api.js`](.storybook/mock-api.js)) answers the requests with fixture posts, videos, pages, terms, and images, so the components' real data layer runs as it would in the editor. Add fixtures there when a story needs data that doesn't exist yet.
+
+`npm run build-storybook` builds a static copy into `storybook-static/`.
+
+### Tests
+
 Tests live next to each component as `*.test.js` and run with Jest. They mock the heavier `@wordpress/*` packages (components, data, core-data, block-editor) and test the component's own logic.
 
 ## Releasing

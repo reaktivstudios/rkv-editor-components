@@ -1,0 +1,14 @@
+/* Stand-ins for the wp-admin base styles the components expect. */
+body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+	font-size: 13px;
+	line-height: 1.4;
+	color: #1e1e1e;
+	background: #fff;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}

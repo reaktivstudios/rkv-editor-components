@@ -84,8 +84,14 @@ describe("PostSearchField", () => {
 			allowDirectEntry: false,
 			withURLSuggestion: false,
 			withCreateSuggestion: false,
-			showInitialSuggestions: true,
+			showInitialSuggestions: false,
 		});
+	});
+
+	it("can show suggestions before anything is typed", () => {
+		render(<PostSearchField showInitialSuggestions onChange={jest.fn()} />);
+
+		expect(mockInputProps.showInitialSuggestions).toBe(true);
 	});
 
 	it("keeps the fetcher stable across renders with equal queryArgs", () => {
