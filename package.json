@@ -20,16 +20,18 @@
 	"files": [
 		"build",
 		"build-style",
-		"src"
+		"src",
+		"!src/**/*.test.js"
 	],
 	"sideEffects": [
 		"*.css"
 	],
 	"scripts": {
 		"build": "npm run build:js && npm run build:css",
-		"build:js": "babel src --out-dir build --delete-dir-on-start",
+		"build:js": "babel src --out-dir build --delete-dir-on-start --ignore \"src/**/*.test.js\"",
 		"build:css": "sass --no-source-map src/style.scss build-style/style.css",
-		"prepublishOnly": "npm run build"
+		"prepublishOnly": "npm run build",
+		"test": "jest"
 	},
 	"publishConfig": {
 		"access": "public"
@@ -54,7 +56,19 @@
 	"devDependencies": {
 		"@babel/cli": "^7.29.7",
 		"@babel/core": "^7.29.7",
+		"@testing-library/dom": "^10.4.2",
+		"@testing-library/react": "^16.3.3",
 		"@wordpress/babel-preset-default": "^8.56.0",
+		"@wordpress/date": "^5.56.0",
+		"@wordpress/element": "^8.8.0",
+		"@wordpress/html-entities": "^4.56.0",
+		"@wordpress/i18n": "^6.29.0",
+		"@wordpress/keycodes": "^4.56.0",
+		"babel-jest": "^30.5.2",
+		"jest": "^30.5.2",
+		"jest-environment-jsdom": "^30.5.2",
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1",
 		"sass": "^1.105.0"
 	},
 	"peerDependenciesMeta": {

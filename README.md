@@ -30,9 +30,12 @@ Each component's README documents its props.
 ```bash
 npm install
 npm run build
+npm test
 ```
 
 `build/` holds the Babel-compiled ES modules; `build-style/style.css` holds the compiled styles. Both are generated on `npm publish`.
+
+Tests live next to each component as `*.test.js` and run with Jest. They mock the heavier `@wordpress/*` packages (components, data, core-data, block-editor) and test the component's own logic.
 
 ## Publishing
 
