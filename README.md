@@ -2,6 +2,8 @@
 
 Reusable WordPress block editor components from Reaktiv Studios.
 
+**[Browse the components in Storybook →](https://reaktivstudios.github.io/rkv-editor-components/)**
+
 ## Install
 
 ```bash
@@ -47,7 +49,7 @@ npm run storybook
 
 This opens Storybook at http://localhost:6006, with stories for each component (`*.stories.js`, next to the component). There's no WordPress site behind it: a fake REST API ([`.storybook/mock-api.js`](.storybook/mock-api.js)) answers the requests with fixture posts, videos, pages, terms, and images, so the components' real data layer runs as it would in the editor. Add fixtures there when a story needs data that doesn't exist yet.
 
-`npm run build-storybook` builds a static copy into `storybook-static/`.
+`npm run build-storybook` builds a static copy into `storybook-static/`. The [Storybook workflow](.github/workflows/storybook.yml) publishes it to [GitHub Pages](https://reaktivstudios.github.io/rkv-editor-components/) whenever components or Storybook config change on `main`.
 
 ### Tests
 
