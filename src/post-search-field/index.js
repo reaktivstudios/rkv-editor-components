@@ -16,6 +16,7 @@ import classnames from "classnames";
  * Internal dependencies
  */
 import fetchPostSuggestions from "./fetch-post-suggestions.js";
+import "./editor.scss";
 
 /**
  * A search field that suggests posts matching `queryArgs` and selects one.

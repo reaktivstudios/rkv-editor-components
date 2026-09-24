@@ -15,11 +15,11 @@
 	"module": "build/index.js",
 	"exports": {
 		".": "./build/index.js",
-		"./style.css": "./build-style/style.css"
+		"./editor.css": "./build/editor.css",
+		"./style.css": "./build/editor.css"
 	},
 	"files": [
 		"build",
-		"build-style",
 		"src",
 		"!src/**/*.test.js"
 	],
@@ -29,7 +29,7 @@
 	"scripts": {
 		"build": "npm run build:js && npm run build:css",
 		"build:js": "babel src --out-dir build --delete-dir-on-start --ignore \"src/**/*.test.js\"",
-		"build:css": "sass --no-source-map src/style.scss build-style/style.css",
+		"build:css": "sass --no-source-map src:build",
 		"prepublishOnly": "npm run build",
 		"test": "jest"
 	},
@@ -46,12 +46,12 @@
 		"@wordpress/element": ">=6",
 		"@wordpress/html-entities": ">=4",
 		"@wordpress/i18n": ">=5",
-		"@wordpress/icons": ">=10",
 		"@wordpress/keycodes": ">=4",
 		"react": ">=18"
 	},
 	"dependencies": {
-		"classnames": "^2.5.1"
+		"classnames": "^2.5.1",
+		"@wordpress/icons": "^17.0.0"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.29.7",
@@ -97,9 +97,6 @@
 			"optional": true
 		},
 		"@wordpress/i18n": {
-			"optional": true
-		},
-		"@wordpress/icons": {
 			"optional": true
 		},
 		"@wordpress/keycodes": {

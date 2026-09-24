@@ -20,6 +20,7 @@ import { useDebounce } from "@wordpress/compose";
  * Internal dependencies.
  */
 import PostCollection from "./post-collection.js";
+import "./editor.scss";
 
 const DEFAULT_QUERY_ARGS = {
 	per_page: 20,

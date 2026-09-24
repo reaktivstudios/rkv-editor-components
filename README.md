@@ -8,13 +8,17 @@ Reusable WordPress block editor components from Reaktiv Studios.
 npm install @reaktiv/editor-components
 ```
 
-Built for projects bundled with `@wordpress/scripts`. The `@wordpress/*` packages and `react` are peer dependencies, supplied at runtime by WordPress through the dependency extraction plugin.
+Built for projects bundled with `@wordpress/scripts`. Most `@wordpress/*` packages and `react` are peer dependencies, supplied at runtime by WordPress through the dependency extraction plugin. `@wordpress/icons` is a regular dependency because `@wordpress/scripts` bundles it instead.
 
-Include the styles once in your editor bundle:
+Each component brings its own styles. Importing a component is all it takes:
 
 ```js
-import "@reaktiv/editor-components/style.css";
+import { PostModal } from "@reaktiv/editor-components";
 ```
+
+In a block built with `@wordpress/scripts`, the component's CSS is bundled into the block's `editorStyle` (`index.css`), so it loads in the editor only. Only the components you import add CSS.
+
+To load every component's styles yourself instead, use `@reaktiv/editor-components/editor.css`.
 
 ## Components
 
@@ -33,7 +37,7 @@ npm run build
 npm test
 ```
 
-`build/` holds the Babel-compiled ES modules; `build-style/style.css` holds the compiled styles. Both are generated on `npm publish`.
+`build/` holds the Babel-compiled ES modules, with each component's `editor.scss` compiled to `editor.css` next to it. Component styles are named `editor.scss`, not `style.scss`, because `@wordpress/scripts` moves any `style.*` file into the block's front-end stylesheet. `build/` is regenerated on `npm publish`.
 
 Tests live next to each component as `*.test.js` and run with Jest. They mock the heavier `@wordpress/*` packages (components, data, core-data, block-editor) and test the component's own logic.
 
