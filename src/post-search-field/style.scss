@@ -1,0 +1,26 @@
+// Outside LinkControl's popover the results render in the page flow, so give
+// them a dropdown-style surface.
+.rkv-post-search-field {
+	.block-editor-link-control__search-results-wrapper {
+		position: relative;
+		background: #fff;
+		border-radius: 4px;
+		box-shadow:
+			0 0 0 1px #ccc,
+			0 2px 3px #0000000d,
+			0 4px 5px #0000000a,
+			0 12px 12px #00000008,
+			0 16px 16px #00000005;
+		box-sizing: border-box;
+		margin-top: 12px;
+		width: 100%;
+
+		.block-editor-link-control__search-results {
+			padding-left: 0;
+		}
+
+		.components-menu-item__shortcut {
+			display: none;
+		}
+	}
+}

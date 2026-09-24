@@ -1,1 +1,2 @@
-@use "./post-modal/style";
+@use "./post-modal/style" as post-modal;
+@use "./post-search-field/style" as post-search-field;
