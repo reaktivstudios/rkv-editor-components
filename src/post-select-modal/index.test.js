@@ -6,7 +6,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 /**
  * Internal dependencies
  */
-import PostModal from "./index.js";
+import PostSelectModal from "./index.js";
 
 jest.mock(
 	"@wordpress/components",
@@ -127,7 +127,7 @@ const renderModal = (props = {}) => {
 	const onClose = jest.fn();
 
 	const utils = render(
-		<PostModal isOpen onSelect={onSelect} onClose={onClose} {...props} />,
+		<PostSelectModal isOpen onSelect={onSelect} onClose={onClose} {...props} />,
 	);
 
 	return { ...utils, onSelect, onClose };
@@ -145,9 +145,9 @@ beforeEach(() => {
 	mockCache = new Map();
 });
 
-describe("PostModal", () => {
+describe("PostSelectModal", () => {
 	it("renders nothing when closed", () => {
-		const { container } = render(<PostModal isOpen={false} onSelect={jest.fn()} />);
+		const { container } = render(<PostSelectModal isOpen={false} onSelect={jest.fn()} />);
 
 		expect(container.innerHTML).toBe("");
 	});
@@ -263,11 +263,11 @@ describe("PostModal", () => {
 
 	it("resets the selection each time it opens", () => {
 		const onSelect = jest.fn();
-		const { rerender } = render(<PostModal isOpen onSelect={onSelect} />);
+		const { rerender } = render(<PostSelectModal isOpen onSelect={onSelect} />);
 
 		fireEvent.click(item("Alpha"));
-		rerender(<PostModal isOpen={false} onSelect={onSelect} />);
-		rerender(<PostModal isOpen onSelect={onSelect} />);
+		rerender(<PostSelectModal isOpen={false} onSelect={onSelect} />);
+		rerender(<PostSelectModal isOpen onSelect={onSelect} />);
 
 		expect(item("Alpha").getAttribute("aria-selected")).toBe("false");
 	});

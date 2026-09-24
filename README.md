@@ -15,7 +15,7 @@ Built for projects bundled with `@wordpress/scripts`. Most `@wordpress/*` packag
 Each component brings its own styles. Importing a component is all it takes:
 
 ```js
-import { PostModal } from "@reaktiv/editor-components";
+import { PostSelectModal } from "@reaktiv/editor-components";
 ```
 
 In a block built with `@wordpress/scripts`, the component's CSS is bundled into the block's `editorStyle` (`index.css`), so it loads in the editor only. Only the components you import add CSS.
@@ -26,7 +26,7 @@ To load every component's styles yourself instead, use `@reaktiv/editor-componen
 
 | Component | Description |
 | --- | --- |
-| [`PostModal`](src/post-modal/README.md) | A modal for searching and selecting posts. |
+| [`PostSelectModal`](src/post-select-modal/README.md) | A modal for searching and selecting posts. |
 | [`PostSearchField`](src/post-search-field/README.md) | A search field that selects a single post from `queryArgs`-driven suggestions. |
 
 Each component's README documents its props.

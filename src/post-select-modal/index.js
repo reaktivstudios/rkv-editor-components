@@ -50,15 +50,15 @@ const EMPTY_ARRAY = [];
  * @param {string}   props.defaultView     "grid" or "list".
  * @param {string[]} props.views           Available views; the toggle is hidden when only one is given.
  */
-const PostModal = ({ isOpen, ...props }) => {
+const PostSelectModal = ({ isOpen, ...props }) => {
 	if (!isOpen) {
 		return null;
 	}
 
-	return <PostModalContent {...props} />;
+	return <PostSelectModalContent {...props} />;
 };
 
-const PostModalContent = ({
+const PostSelectModalContent = ({
 	queryArgs: { postType = "post", ...restQueryArgs } = {},
 	onClose,
 	onSelect,
@@ -238,4 +238,4 @@ const PostModalContent = ({
 	);
 };
 
-export default PostModal;
+export default PostSelectModal;

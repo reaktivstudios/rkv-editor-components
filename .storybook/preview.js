@@ -19,5 +19,9 @@ export default {
 	parameters: {
 		layout: "padded",
 		controls: { expanded: true },
+		options: {
+			// The introduction is first, so Storybook opens on it.
+			storySort: { order: ["Introduction", "Components"] },
+		},
 	},
 };

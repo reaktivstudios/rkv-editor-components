@@ -24,7 +24,8 @@ const babelJsx = () => ({
 
 /** @type { import('@storybook/react-vite').StorybookConfig } */
 export default {
-	stories: ["../src/**/*.stories.js"],
+	stories: ["./*.mdx", "../src/**/*.stories.js"],
+	addons: ["@storybook/addon-docs"],
 	framework: { name: "@storybook/react-vite", options: {} },
 	core: { disableTelemetry: true },
 	viteFinal: (config) => ({

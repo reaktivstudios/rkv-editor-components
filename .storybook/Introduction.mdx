@@ -1,0 +1,52 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Introduction" />
+
+# @reaktiv/editor-components
+
+Reusable WordPress block editor components from Reaktiv Studios, for use in custom blocks and editor plugins.
+
+## Components
+
+### PostSelectModal
+
+A modal for searching and selecting one or more posts, with grid and list views, "Load more" pagination, and optional taxonomy badges.
+
+[View stories](?path=/story/components-postselectmodal--default) · [README](https://github.com/reaktivstudios/rkv-editor-components/blob/main/src/post-select-modal/README.md)
+
+### PostSearchField
+
+A search field that selects a single post from suggestions, across one or more post types, filtered and sorted by `queryArgs`.
+
+[View stories](?path=/story/components-postsearchfield--default) · [README](https://github.com/reaktivstudios/rkv-editor-components/blob/main/src/post-search-field/README.md)
+
+Each README lists every prop. Both components take a `queryArgs` object: `postType` (one slug or several), plus any argument the WordPress REST API accepts for that post type, like `categories`, `orderby`, or `per_page`.
+
+## Using it in a block
+
+```bash
+npm install @reaktiv/editor-components
+```
+
+```jsx
+import { PostSelectModal, PostSearchField } from "@reaktiv/editor-components";
+```
+
+That's the only import needed. Each component brings its own styles, which `@wordpress/scripts` bundles into the block's editor stylesheet.
+
+## Using this Storybook
+
+- **Stories** in the sidebar show each component in a different setup: several post types, taxonomy filters, preselected posts, custom rendering, and so on.
+- **Controls**, below each story, change its props live. Try editing `queryArgs`, for example setting `postType` to `"video"` or adding `categories: [2]`.
+- **Actions** logs what the component reports back, such as the IDs and posts passed to `onSelect` or `onChange`.
+
+## About the data
+
+There's no WordPress site behind this Storybook. A fake REST API answers the components' requests with made-up posts, videos, pages, categories, tags, shows, and placeholder images, so searching, filtering, sorting, and pagination all work as they would in the editor. Nothing is saved, and reloading resets every story.
+
+The fake data has three post types (`post`, `video`, `page`), three categories (News `1`, Sports `2`, Science `3`), two tags (Featured `11`, Analysis `12`), and three shows on videos (`21`–`23`). Use those IDs in `queryArgs` to try filtering.
+
+## Links
+
+- [Source on GitHub](https://github.com/reaktivstudios/rkv-editor-components)
+- [Package on npm](https://www.npmjs.com/package/@reaktiv/editor-components)

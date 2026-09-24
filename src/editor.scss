@@ -1,4 +1,4 @@
 // All component styles in one file, for consumers that load them separately.
 // Each component also imports its own styles, so most consumers don't need this.
-@use "./post-modal/editor" as post-modal;
+@use "./post-select-modal/editor" as post-select-modal;
 @use "./post-search-field/editor" as post-search-field;

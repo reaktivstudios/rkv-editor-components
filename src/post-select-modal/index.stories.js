@@ -12,7 +12,7 @@ import { fn } from "storybook/test";
 /**
  * Internal dependencies
  */
-import PostModal from "./index.js";
+import PostSelectModal from "./index.js";
 
 // Holds the open state and last selection, as a block's edit function would.
 const Playground = ({ onSelect, onClose, ...args }) => {
@@ -25,7 +25,7 @@ const Playground = ({ onSelect, onClose, ...args }) => {
 				Open modal
 			</Button>
 			<p>Selected IDs: {selection.length ? selection.join(", ") : "none"}</p>
-			<PostModal
+			<PostSelectModal
 				{...args}
 				isOpen={isOpen}
 				selectedPostIds={selection}
@@ -44,8 +44,8 @@ const Playground = ({ onSelect, onClose, ...args }) => {
 };
 
 export default {
-	title: "Components/PostModal",
-	component: PostModal,
+	title: "Components/PostSelectModal",
+	component: PostSelectModal,
 	render: (args) => <Playground {...args} />,
 	args: {
 		queryArgs: { postType: "post" },

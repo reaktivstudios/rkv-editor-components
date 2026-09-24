@@ -1,13 +1,13 @@
-# PostModal
+# PostSelectModal
 
 A modal for searching and selecting posts, with grid and list views and "Load more" pagination.
 
 ## Usage
 
 ```jsx
-import { PostModal } from "@reaktiv/editor-components";
+import { PostSelectModal } from "@reaktiv/editor-components";
 
-<PostModal
+<PostSelectModal
 	isOpen={isOpen}
 	queryArgs={{ postType: "video", categories: [3] }}
 	postCount={3}
