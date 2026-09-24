@@ -5,8 +5,8 @@ A modal for searching and selecting posts, with grid and list views and "Load mo
 ## Usage
 
 ```jsx
-import { PostModal } from "@rkv/editor-components";
-import "@rkv/editor-components/style.css"; // Once per editor bundle.
+import { PostModal } from "@reaktiv/editor-components";
+import "@reaktiv/editor-components/style.css"; // Once per editor bundle.
 
 <PostModal
 	isOpen={isOpen}

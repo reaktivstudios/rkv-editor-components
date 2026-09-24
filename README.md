@@ -1,11 +1,11 @@
-# @rkv/editor-components
+# @reaktiv/editor-components
 
 Reusable WordPress block editor components from Reaktiv Studios.
 
 ## Install
 
 ```bash
-npm install @rkv/editor-components
+npm install @reaktiv/editor-components
 ```
 
 Built for projects bundled with `@wordpress/scripts`. The `@wordpress/*` packages and `react` are peer dependencies, supplied at runtime by WordPress through the dependency extraction plugin.
@@ -13,7 +13,7 @@ Built for projects bundled with `@wordpress/scripts`. The `@wordpress/*` package
 Include the styles once in your editor bundle:
 
 ```js
-import "@rkv/editor-components/style.css";
+import "@reaktiv/editor-components/style.css";
 ```
 
 ## Components
@@ -39,11 +39,34 @@ Tests live next to each component as `*.test.js` and run with Jest. They mock th
 
 ## Publishing
 
-The `@rkv` scope must exist on npm and your account must be a member of it.
+Releases publish to npm from GitHub Actions ([`npm-publish.yml`](.github/workflows/npm-publish.yml)) using [trusted publishing](https://docs.npmjs.com/trusted-publishers), so no npm token is needed.
 
-```bash
-npm login
-npm publish
-```
+1. Bump the version. This updates `package.json` and `package-lock.json`, commits, and creates a matching `v`-prefixed tag:
+
+   ```bash
+   npm version patch
+   ```
+
+2. Push the commit and tag:
+
+   ```bash
+   git push --follow-tags
+   ```
+
+3. Create a GitHub release from the tag. The workflow checks that the tag matches `package.json`, runs the tests, then publishes.
+
+### First-time setup
+
+Trusted publishing is configured from the package's settings on npmjs.com, so the package must exist first:
+
+1. Publish once from your machine. Your npm account must be a member of the `@reaktiv` org.
+
+   ```bash
+   npm login
+   npm publish
+   ```
+
+2. On npmjs.com, open the package's **Settings → Trusted Publisher → GitHub Actions** and enter organization `reaktivstudios`, repository `rkv-editor-components`, and workflow `npm-publish.yml`.
+3. Under publishing access, choose **Require two-factor authentication and disallow tokens**.
 
 `publishConfig.access` is set to `public`, which scoped packages require for a public release.

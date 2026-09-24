@@ -5,8 +5,8 @@ A search field that suggests posts matching `queryArgs` and selects a single pos
 ## Usage
 
 ```jsx
-import { PostSearchField } from "@rkv/editor-components";
-import "@rkv/editor-components/style.css"; // Once per editor bundle.
+import { PostSearchField } from "@reaktiv/editor-components";
+import "@reaktiv/editor-components/style.css"; // Once per editor bundle.
 
 <PostSearchField
 	queryArgs={{ postType: ["post", "video"], categories: [3], orderby: "date" }}
