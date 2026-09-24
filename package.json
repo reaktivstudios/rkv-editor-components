@@ -1,0 +1,94 @@
+{
+	"name": "@rkv/editor-components",
+	"version": "0.1.0",
+	"description": "Reusable block editor components from Reaktiv Studios.",
+	"author": "Reaktiv",
+	"license": "GPL-3.0-or-later",
+	"keywords": [
+		"wordpress",
+		"gutenberg",
+		"block-editor",
+		"components"
+	],
+	"type": "module",
+	"main": "build/index.js",
+	"module": "build/index.js",
+	"exports": {
+		".": "./build/index.js",
+		"./style.css": "./build-style/style.css"
+	},
+	"files": [
+		"build",
+		"build-style",
+		"src"
+	],
+	"sideEffects": [
+		"*.css"
+	],
+	"scripts": {
+		"build": "npm run build:js && npm run build:css",
+		"build:js": "babel src --out-dir build --delete-dir-on-start",
+		"build:css": "sass --no-source-map src/style.scss build-style/style.css",
+		"prepublishOnly": "npm run build"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"peerDependencies": {
+		"@wordpress/components": ">=28",
+		"@wordpress/compose": ">=7",
+		"@wordpress/core-data": ">=7",
+		"@wordpress/data": ">=10",
+		"@wordpress/date": ">=5",
+		"@wordpress/element": ">=6",
+		"@wordpress/html-entities": ">=4",
+		"@wordpress/i18n": ">=5",
+		"@wordpress/icons": ">=10",
+		"@wordpress/keycodes": ">=4",
+		"react": ">=18"
+	},
+	"dependencies": {
+		"classnames": "^2.5.1"
+	},
+	"devDependencies": {
+		"@babel/cli": "^7.29.7",
+		"@babel/core": "^7.29.7",
+		"@wordpress/babel-preset-default": "^8.56.0",
+		"sass": "^1.105.0"
+	},
+	"peerDependenciesMeta": {
+		"@wordpress/components": {
+			"optional": true
+		},
+		"@wordpress/compose": {
+			"optional": true
+		},
+		"@wordpress/core-data": {
+			"optional": true
+		},
+		"@wordpress/data": {
+			"optional": true
+		},
+		"@wordpress/date": {
+			"optional": true
+		},
+		"@wordpress/element": {
+			"optional": true
+		},
+		"@wordpress/html-entities": {
+			"optional": true
+		},
+		"@wordpress/i18n": {
+			"optional": true
+		},
+		"@wordpress/icons": {
+			"optional": true
+		},
+		"@wordpress/keycodes": {
+			"optional": true
+		},
+		"react": {
+			"optional": true
+		}
+	}
+}
