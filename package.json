@@ -4,6 +4,14 @@
 	"description": "Reusable block editor components from Reaktiv Studios.",
 	"author": "Reaktiv",
 	"license": "GPL-3.0-or-later",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/reaktivstudios/rkv-editor-components.git"
+	},
+	"homepage": "https://github.com/reaktivstudios/rkv-editor-components#readme",
+	"bugs": {
+		"url": "https://github.com/reaktivstudios/rkv-editor-components/issues"
+	},
 	"keywords": [
 		"wordpress",
 		"gutenberg",
