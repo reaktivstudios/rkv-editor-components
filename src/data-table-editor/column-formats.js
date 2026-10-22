@@ -1,11 +1,11 @@
-export const DEFAULT_FORMAT = "text";
+export const DEFAULT_DATA_COLUMN_FORMAT = "text";
 
 /**
  * Column formats: how a column's values are displayed. The stored cell text
  * never changes. `label` and `preview` feed the format pill; any other keys are
  * yours to use when you display the values.
  */
-export const DEFAULT_FORMATS = {
+export const DEFAULT_DATA_COLUMN_FORMATS = {
 	text: { label: "Text", preview: "Text" },
 	percent: { label: "Percentage", preview: "%" },
 	number: { label: "Number", preview: "1,234" },
@@ -28,15 +28,15 @@ const YEAR = /^(1[0-9]|2[0-9])\d\d$/;
  * @param {Object}     formats Available formats keyed by slug.
  * @return {string[]} One format slug per column.
  */
-export function detectColumnFormats(rows, formats = DEFAULT_FORMATS) {
-	const pick = (slug) => (slug in formats ? slug : DEFAULT_FORMAT);
+export function detectDataColumnFormats(rows, formats = DEFAULT_DATA_COLUMN_FORMATS) {
+	const pick = (slug) => (slug in formats ? slug : DEFAULT_DATA_COLUMN_FORMAT);
 	return (rows[0] ?? []).map((_, c) => {
 		const values = rows
 			.slice(1)
 			.map((row) => String(row[c] ?? "").trim())
 			.filter(Boolean);
 		if (c === 0 || !values.length) {
-			return DEFAULT_FORMAT;
+			return DEFAULT_DATA_COLUMN_FORMAT;
 		}
 		if (values.every((v) => PERCENT.test(v))) {
 			return pick("percent");
@@ -50,6 +50,6 @@ export function detectColumnFormats(rows, formats = DEFAULT_FORMATS) {
 		if (values.every((v) => NUMBER.test(v))) {
 			return pick("number");
 		}
-		return DEFAULT_FORMAT;
+		return DEFAULT_DATA_COLUMN_FORMAT;
 	});
 }

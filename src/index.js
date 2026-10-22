@@ -7,9 +7,9 @@ export { default as FormatPill } from "./format-pill/index.js";
 export { default as DataTableEditor } from "./data-table-editor/index.js";
 export { default as DataTableEditorModal } from "./data-table-editor/modal.js";
 export {
-	DEFAULT_FORMAT,
-	DEFAULT_FORMATS,
-	detectColumnFormats,
+	DEFAULT_DATA_COLUMN_FORMAT,
+	DEFAULT_DATA_COLUMN_FORMATS,
+	detectDataColumnFormats,
 } from "./data-table-editor/column-formats.js";
 export { parseDelimited } from "./data-table-editor/csv.js";
 export { parseXlsx } from "./data-table-editor/xlsx.js";

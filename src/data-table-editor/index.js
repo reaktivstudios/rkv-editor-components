@@ -34,9 +34,9 @@ import classnames from "classnames";
  */
 import FormatPill from "../format-pill/index.js";
 import {
-	DEFAULT_FORMAT,
-	DEFAULT_FORMATS,
-	detectColumnFormats,
+	DEFAULT_DATA_COLUMN_FORMAT,
+	DEFAULT_DATA_COLUMN_FORMATS,
+	detectDataColumnFormats,
 } from "./column-formats.js";
 import { normalize, parseDelimited } from "./csv.js";
 import { clipboardPaste } from "./icons.js";
@@ -63,7 +63,7 @@ import "./editor.scss";
 export default function DataTableEditor({
 	data,
 	columnFormats = [],
-	formats: formatOptions = DEFAULT_FORMATS,
+	formats: formatOptions = DEFAULT_DATA_COLUMN_FORMATS,
 	readOnly = false,
 	readOnlyNotice = __(
 		"These rows can’t be edited here. Column formats can.",
@@ -83,7 +83,7 @@ export default function DataTableEditor({
 	const lastKey = useRef(null);
 
 	const columnCount = rows[0].length;
-	const formatAt = (i) => formats[i] ?? DEFAULT_FORMAT;
+	const formatAt = (i) => formats[i] ?? DEFAULT_DATA_COLUMN_FORMAT;
 
 	const isFirstRender = useRef(true);
 	useEffect(() => {
@@ -480,7 +480,7 @@ export default function DataTableEditor({
 											<FormatPill
 												value={formatAt(c)}
 												formats={formatOptions}
-												defaultFormat={DEFAULT_FORMAT}
+												defaultFormat={DEFAULT_DATA_COLUMN_FORMAT}
 												onChange={(slug) => setFormat(c, slug)}
 											/>
 										)}
@@ -496,7 +496,7 @@ export default function DataTableEditor({
 				isOpen={!!pending}
 				confirmButtonText={__("Replace", "rkv-editor-components")}
 				onConfirm={() => {
-					setRows(pending, null, detectColumnFormats(pending, formatOptions));
+					setRows(pending, null, detectDataColumnFormats(pending, formatOptions));
 					setPending(null);
 				}}
 				onCancel={() => setPending(null)}

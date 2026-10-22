@@ -36,7 +36,7 @@ Requires `@wordpress/undo-manager`. `.xlsx` files are read in the browser with `
 | ---------------- | ------------ | ------------------ | ----------- |
 | `data`           | `string[][]` |                    | Header row followed by data rows. Read once, when the editor mounts. |
 | `columnFormats`  | `string[]`   | `[]`               | Format slug per column. Read once, when the editor mounts. |
-| `formats`        | `object`     | `DEFAULT_FORMATS`  | Available formats keyed by slug: `{ label, preview }`. Extra keys are yours to use. |
+| `formats`        | `object`     | `DEFAULT_DATA_COLUMN_FORMATS`  | Available formats keyed by slug: `{ label, preview }`. Extra keys are yours to use. |
 | `readOnly`       | `boolean`    | `false`            | Locks the cells. Column formats can still change. |
 | `readOnlyNotice` | `string`     |                    | Notice above the table when `readOnly`. |
 | `onChange`       | `function`   |                    | Called with `(rows, columnFormats)` after each change, including undo and redo. |
@@ -56,4 +56,4 @@ All other props go to `DataTableEditor`.
 
 ## Helpers
 
-`DEFAULT_FORMAT`, `DEFAULT_FORMATS`, `detectColumnFormats(rows, formats)`, `parseDelimited(text)` and `parseXlsx(buffer)` are exported for use outside the modal.
+`DEFAULT_DATA_COLUMN_FORMAT`, `DEFAULT_DATA_COLUMN_FORMATS`, `detectDataColumnFormats(rows, formats)`, `parseDelimited(text)` and `parseXlsx(buffer)` are exported for use outside the modal.

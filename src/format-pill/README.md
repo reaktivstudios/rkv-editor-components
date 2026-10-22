@@ -3,7 +3,7 @@
 A pill showing a column's format. It opens a menu to choose another, with a preview of each.
 
 ```jsx
-<FormatPill value="usd" formats={DEFAULT_FORMATS} onChange={(slug) => setFormat(slug)} />
+<FormatPill value="usd" formats={DEFAULT_DATA_COLUMN_FORMATS} onChange={(slug) => setFormat(slug)} />
 ```
 
 | Prop            | Type       | Default           | Description |

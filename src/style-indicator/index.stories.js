@@ -2,10 +2,14 @@
  * Internal dependencies
  */
 import StyleIndicator from "./index.js";
+import { usage } from "../../.storybook/usage.js";
 
 export default {
 	title: "Components/StyleIndicator",
 	component: StyleIndicator,
+	parameters: {
+		docs: { source: { transform: usage({ imports: ["StyleIndicator"] }) } },
+	},
 	args: { color: "#3858e9" },
 };
 
