@@ -7,6 +7,7 @@ import { useState } from "@wordpress/element";
  * Internal dependencies
  */
 import ClampControl from "./index.js";
+import { js, usage } from "../../.storybook/usage.js";
 
 const Playground = ({ value: initial, ...args }) => {
 	const [value, setValue] = useState(initial);
@@ -19,6 +20,19 @@ const Playground = ({ value: initial, ...args }) => {
 
 export default {
 	title: "Components/ClampControl",
+	parameters: {
+		docs: {
+			source: {
+				transform: usage({
+					imports: ["ClampControl"],
+					react: 'import { useState } from "@wordpress/element";',
+					omit: ["value"],
+					state: (args) => `const [value, setValue] = useState(${js(args.value)});`,
+					extra: ["value={value}", "onChange={setValue}"],
+				}),
+			},
+		},
+	},
 	component: ClampControl,
 	render: (args) => <Playground {...args} />,
 	args: {

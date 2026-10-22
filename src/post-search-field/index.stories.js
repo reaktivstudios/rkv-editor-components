@@ -12,6 +12,7 @@ import { fn } from "storybook/test";
  * Internal dependencies
  */
 import PostSearchField from "./index.js";
+import { usage } from "../../.storybook/usage.js";
 
 // Holds the selected ID, as a block's edit function would. The width matches
 // the block inspector sidebar, where the field usually lives.
@@ -35,6 +36,19 @@ const Playground = ({ onChange, value: initialValue, ...args }) => {
 
 export default {
 	title: "Components/PostSearchField",
+	parameters: {
+		docs: {
+			source: {
+				transform: usage({
+					imports: ["PostSearchField"],
+					react: 'import { useState } from "@wordpress/element";',
+					omit: ["value"],
+					state: (args) => `const [postId, setPostId] = useState(${args.value ?? "null"});`,
+					extra: ["value={postId}", "onChange={(id, suggestion) => setPostId(id)}"],
+				}),
+			},
+		},
+	},
 	component: PostSearchField,
 	render: (args) => <Playground {...args} />,
 	args: {

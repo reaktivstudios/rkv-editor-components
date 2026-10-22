@@ -16,9 +16,20 @@ apiFetch.use(mockApiMiddleware);
 
 /** @type { import('@storybook/react-vite').Preview } */
 export default {
+	tags: ["autodocs"],
 	parameters: {
 		layout: "padded",
 		controls: { expanded: true },
+		docs: {
+			source: {
+				type: "dynamic",
+				language: "jsx",
+				// Stories render through a stateful `Playground` wrapper; show the real component.
+				transform: (code, { component }) =>
+					code.replace(/<Playground\b/, `<${component?.displayName || component?.name || "Component"}`),
+			},
+			canvas: { sourceState: "shown" },
+		},
 		options: {
 			// The introduction is first, so Storybook opens on it.
 			storySort: { order: ["Introduction", "Components"] },

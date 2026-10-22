@@ -8,6 +8,7 @@ import { RangeControl } from "@wordpress/components";
  * Internal dependencies
  */
 import LinkedControls from "./index.js";
+import { usage } from "../../.storybook/usage.js";
 
 const Playground = (args) => {
 	const [values, setValues] = useState({ x: 4, y: 4 });
@@ -32,6 +33,27 @@ const Playground = (args) => {
 
 export default {
 	title: "Components/LinkedControls",
+	parameters: {
+		docs: {
+			source: {
+				transform: usage({
+					imports: ["LinkedControls"],
+					react: 'import { useState } from "@wordpress/element";\nimport { RangeControl } from "@wordpress/components";',
+					state: "const [values, setValues] = useState({ x: 4, y: 4 });",
+					extra: ["values={values}", "onChange={setValues}"],
+					children: `{({ label, value, onChange }) => (
+	<RangeControl
+		label={label}
+		value={value}
+		onChange={onChange}
+		min={0}
+		max={20}
+	/>
+)}`,
+				}),
+			},
+		},
+	},
 	component: LinkedControls,
 	render: (args) => <Playground {...args} />,
 	args: {

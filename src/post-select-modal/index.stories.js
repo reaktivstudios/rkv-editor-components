@@ -13,6 +13,7 @@ import { fn } from "storybook/test";
  * Internal dependencies
  */
 import PostSelectModal from "./index.js";
+import { usage } from "../../.storybook/usage.js";
 
 // Holds the open state and last selection, as a block's edit function would.
 const Playground = ({ onSelect, onClose, ...args }) => {
@@ -45,6 +46,28 @@ const Playground = ({ onSelect, onClose, ...args }) => {
 
 export default {
 	title: "Components/PostSelectModal",
+	parameters: {
+		docs: {
+			source: {
+				transform: usage({
+					imports: ["PostSelectModal"],
+					react: 'import { useState } from "@wordpress/element";',
+					omit: ["selectedPostIds", "renderItem"],
+					state: (args) => `const [isOpen, setIsOpen] = useState(false);
+const [postIds, setPostIds] = useState(${JSON.stringify(args.selectedPostIds || [])});`,
+					extra: (args) => [
+						"isOpen={isOpen}",
+						"selectedPostIds={postIds}",
+						"onSelect={(ids, posts) => {\n\tsetPostIds(ids);\n\tsetIsOpen(false);\n}}",
+						"onClose={() => setIsOpen(false)}",
+						...(args.renderItem
+							? [`renderItem={({ post, isSelected }) => (\n\t<div>\n\t\t<strong>{post.title.rendered}</strong>\n\t\t<div>{isSelected ? "✓ Selected" : \`ID \${post.id}\`}</div>\n\t</div>\n)}`]
+							: []),
+					],
+				}),
+			},
+		},
+	},
 	component: PostSelectModal,
 	render: (args) => <Playground {...args} />,
 	args: {

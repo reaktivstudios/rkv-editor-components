@@ -14,6 +14,7 @@ import { fn } from "storybook/test";
  */
 import DataTableEditor from "./index.js";
 import DataTableEditorModal from "./modal.js";
+import { usage } from "../../.storybook/usage.js";
 
 const DATA = [
 	["Region", "Revenue", "Share", "Year"],
@@ -25,7 +26,17 @@ const DATA = [
 export default {
 	title: "Components/DataTableEditor",
 	component: DataTableEditor,
-	parameters: { layout: "padded" },
+	parameters: {
+		layout: "padded",
+		docs: {
+			source: {
+				transform: usage({
+					imports: ["DataTableEditor"],
+					extra: ["onChange={(rows, columnFormats) => {\n\t// Store the rows and formats.\n}}"],
+				}),
+			},
+		},
+	},
 	args: {
 		data: DATA,
 		columnFormats: ["text", "usd", "percent", "year"],
@@ -66,4 +77,19 @@ const ModalPlayground = ({ onSave, onClose, ...args }) => {
 export const InAModal = {
 	render: (args) => <ModalPlayground {...args} />,
 	args: { onSave: fn(), onClose: fn() },
+	parameters: {
+		docs: {
+			source: {
+				transform: usage({
+					imports: ["DataTableEditorModal"],
+					react: 'import { useState } from "@wordpress/element";\nimport { Button } from "@wordpress/components";',
+					state: "// Render the modal only while isOpen; a button calls setIsOpen(true).\nconst [isOpen, setIsOpen] = useState(false);",
+					extra: [
+						"onSave={(rows, columnFormats) => {\n\t// Store the result, then close.\n\tsetIsOpen(false);\n}}",
+						"onClose={() => setIsOpen(false)}",
+					],
+				}),
+			},
+		},
+	},
 };
