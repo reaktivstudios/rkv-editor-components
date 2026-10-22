@@ -13,6 +13,7 @@ import { fn } from "storybook/test";
  * Internal dependencies
  */
 import DataTableEditor from "./index.js";
+import DataTableEditorModal from "./modal.js";
 
 const DATA = [
 	["Region", "Revenue", "Share", "Year"],
@@ -21,7 +22,24 @@ const DATA = [
 	["West", "$800", "27%", "2024"],
 ];
 
-const Playground = ({ onSave, onClose, ...args }) => {
+export default {
+	title: "Components/DataTableEditor",
+	component: DataTableEditor,
+	parameters: { layout: "padded" },
+	args: {
+		data: DATA,
+		columnFormats: ["text", "usd", "percent", "year"],
+		onChange: fn(),
+	},
+};
+
+export const Default = {};
+
+export const ReadOnly = {
+	args: { readOnly: true },
+};
+
+const ModalPlayground = ({ onSave, onClose, ...args }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	return (
 		<>
@@ -29,7 +47,7 @@ const Playground = ({ onSave, onClose, ...args }) => {
 				Edit data
 			</Button>
 			{isOpen && (
-				<DataTableEditor
+				<DataTableEditorModal
 					{...args}
 					onSave={(...result) => {
 						onSave(...result);
@@ -45,17 +63,7 @@ const Playground = ({ onSave, onClose, ...args }) => {
 	);
 };
 
-export default {
-	title: "Components/DataTableEditor",
-	component: DataTableEditor,
-	render: (args) => <Playground {...args} />,
-	args: {
-		data: DATA,
-		columnFormats: ["text", "usd", "percent", "year"],
-		onSave: fn(),
-		onClose: fn(),
-	},
+export const InAModal = {
+	render: (args) => <ModalPlayground {...args} />,
+	args: { onSave: fn(), onClose: fn() },
 };
-
-export const Default = {};
-export const ReadOnly = { args: { readOnly: true } };

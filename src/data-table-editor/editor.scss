@@ -1,12 +1,30 @@
+$cell-height: 40px;
+$accent: var(
+	--wp-components-color-accent,
+	var(--wp-admin-theme-color, #3858e9)
+);
+$border: var(--rkv-editor-components--border, #ddd);
+$surface: var(--rkv-editor-components--surface, #f6f7f7);
+$ink: var(--rkv-editor-components--ink, #111214);
+
 .rkv-data-table-editor {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	color: $ink;
+	font-size: 13px;
+
+	&__toolbar {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 4px 16px;
+	}
+
 	&__group {
 		display: flex;
 		align-items: center;
-		margin-inline-end: 16px;
-
-		&:last-child {
-			margin-inline-end: 0;
-		}
+		gap: 2px;
 	}
 
 	&__paste {
@@ -14,11 +32,31 @@
 		padding: 16px;
 	}
 
+	// Scrolls on its own so a wide table doesn't stretch the page or modal.
+	&__scroll {
+		overflow: auto;
+		max-width: 100%;
+	}
+
 	&__table {
+		min-width: 100%;
 		border-collapse: collapse;
+
+		th {
+			padding: 0;
+			font-weight: 400;
+			text-align: center;
+			vertical-align: middle;
+		}
+
+		// The row-remove column.
+		tbody th {
+			width: 32px;
+		}
 
 		td {
 			position: relative;
+			min-width: 140px;
 			padding: 0;
 		}
 
@@ -28,7 +66,7 @@
 			content: "";
 			position: absolute;
 			inset: 0;
-			border: 0 solid var(--rkv-editor-components--border, #ddd);
+			border: 0 solid $border;
 			border-inline-end-width: 1px;
 			border-block-end-width: 1px;
 			pointer-events: none;
@@ -42,37 +80,56 @@
 			border-inline-start-width: 1px;
 		}
 
-		td.has-format {
-			.rkv-format-pill {
-				position: absolute;
-				inset-block: 0;
-				inset-inline-end: 8px;
-				display: flex;
-				align-items: center;
-			}
-
-			input {
-				padding-inline-end: 84px;
-			}
-		}
-
+		// Sits above the overlay so the focus ring isn't painted over by it.
 		input {
 			box-sizing: border-box;
+			display: block;
 			width: 100%;
-			min-width: 120px;
+			height: $cell-height;
+			min-height: 0;
+			margin: 0;
+			padding: 0 12px;
 			border: 0;
 			border-radius: 0;
 			box-shadow: none;
+			background: #fff;
+			color: inherit;
+			font: inherit;
+			line-height: $cell-height;
+
+			&:focus {
+				position: relative;
+				z-index: 1;
+				outline: none;
+				box-shadow: inset 0 0 0 1.5px $accent;
+			}
+
+			&[readonly] {
+				cursor: default;
+			}
+		}
+
+		td.has-format input {
+			padding-inline-end: 112px;
+		}
+
+		.rkv-format-pill {
+			position: absolute;
+			inset-block: 0;
+			inset-inline-end: 8px;
+			z-index: 2;
+			display: flex;
+			align-items: center;
 		}
 
 		.is-header input {
+			background: $surface;
 			font-weight: 600;
-			background: var(--rkv-editor-components--surface, #f6f7f7);
 		}
 
 		// The first column holds each row's label, so it reads as a header too.
 		td:first-of-type input {
-			background: var(--rkv-editor-components--surface, #f6f7f7);
+			background: $surface;
 		}
 	}
 
@@ -81,12 +138,12 @@
 		align-items: center;
 		justify-content: space-between;
 		gap: 2px;
-		padding: 4px;
+		padding: 0 0 4px;
 	}
 
 	&__column-move {
 		display: flex;
 		gap: 2px;
-		margin-left: auto;
+		margin-inline-start: auto;
 	}
 }

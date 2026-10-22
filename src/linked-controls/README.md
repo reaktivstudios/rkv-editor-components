@@ -6,7 +6,7 @@ Renders one control for two values (`x` and `y`) until the user unlinks them, th
 <LinkedControls
 	values={{ x: 4, y: 4 }}
 	onChange={({ x, y }) => setGap({ x, y })}
-	linkedLabel="Gap"
+	linkedLabel="Distance"
 	fields={[
 		{ key: "x", label: "Horizontal" },
 		{ key: "y", label: "Vertical" },

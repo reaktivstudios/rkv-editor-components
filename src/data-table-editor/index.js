@@ -10,15 +10,24 @@ import {
 	chevronLeft,
 	chevronRight,
 } from "@wordpress/icons";
-import { useLayoutEffect, useRef, useState } from "@wordpress/element";
+import {
+	useEffect,
+	useLayoutEffect,
+	useRef,
+	useState,
+} from "@wordpress/element";
 import {
 	Button,
 	Dropdown,
-	Modal,
 	Notice,
 	TextareaControl,
 	__experimentalConfirmDialog as ConfirmDialog,
 } from "@wordpress/components";
+
+/**
+ * External dependencies.
+ */
+import classnames from "classnames";
 
 /**
  * Internal dependencies.
@@ -35,34 +44,33 @@ import { parseXlsx } from "./xlsx.js";
 import "./editor.scss";
 
 /**
- * A modal spreadsheet for editing a table of text: type or paste cells, add,
+ * A spreadsheet-style editor for a table of text: type or paste cells, add,
  * remove and reorder rows and columns, import a CSV or .xlsx file, and undo
  * and redo. The first row is the header row. Each column can carry a format.
  *
+ * It keeps its own state, starting from `data`, and reports every change
+ * through `onChange`. To edit in a modal, use `DataTableEditorModal`.
+ *
  * @param {Object}     props
- * @param {string[][]} props.data           Header row followed by data rows.
- * @param {string[]}   props.columnFormats  Format slug per column.
+ * @param {string[][]} props.data           Header row followed by data rows. Read once, when the editor mounts.
+ * @param {string[]}   props.columnFormats  Format slug per column. Read once, when the editor mounts.
  * @param {Object}     props.formats        Available formats keyed by slug: { label, preview }.
  * @param {boolean}    props.readOnly       Locks the cells; column formats can still change.
- * @param {string}     props.title          Modal title.
  * @param {string}     props.readOnlyNotice Notice shown above the table when `readOnly`.
- * @param {Function}   props.onSave         Called with `(rows, columnFormats)`.
- * @param {Function}   props.onClose        Called on cancel, after confirming if there are unapplied edits.
+ * @param {Function}   props.onChange       Called with `(rows, columnFormats)` after each change, including undo and redo.
+ * @param {string}     props.className      Additional class name.
  */
 export default function DataTableEditor({
 	data,
 	columnFormats = [],
 	formats: formatOptions = DEFAULT_FORMATS,
 	readOnly = false,
-	title = readOnly
-		? __("View data", "rkv-editor-components")
-		: __("Edit data", "rkv-editor-components"),
 	readOnlyNotice = __(
 		"These rows can’t be edited here. Column formats can.",
 		"rkv-editor-components",
 	),
-	onSave,
-	onClose,
+	onChange,
+	className,
 }) {
 	// Rows and column formats share one state so undo/redo keeps them aligned.
 	const [table, setTable] = useState(() => ({
@@ -73,6 +81,23 @@ export default function DataTableEditor({
 	const [undoManager] = useState(createUndoManager);
 	// Consecutive edits to the same cell are staged so they collapse into one undo step.
 	const lastKey = useRef(null);
+
+	const columnCount = rows[0].length;
+	const formatAt = (i) => formats[i] ?? DEFAULT_FORMAT;
+
+	const isFirstRender = useRef(true);
+	useEffect(() => {
+		if (isFirstRender.current) {
+			isFirstRender.current = false;
+			return;
+		}
+		onChange?.(
+			rows,
+			Array.from({ length: columnCount }, (_, i) => formatAt(i)),
+		);
+		// Only a new table is a change; `onChange` is usually a fresh closure each render.
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [table]);
 
 	const setRows = (updater, key = null, nextFormats = formats) => {
 		const next = typeof updater === "function" ? updater(rows) : updater;
@@ -121,15 +146,8 @@ export default function DataTableEditor({
 		}
 	};
 	const [pending, setPending] = useState(null);
-	const [confirmingClose, setConfirmingClose] = useState(false);
-	// Closing drops every unapplied edit, so ask first.
-	const requestClose = () =>
-		undoManager.hasUndo() ? setConfirmingClose(true) : onClose();
 	const [importError, setImportError] = useState(null);
 	const fileInput = useRef(null);
-
-	const columnCount = rows[0].length;
-	const formatAt = (i) => formats[i] ?? DEFAULT_FORMAT;
 
 	const setCell = (r, c, value) =>
 		setRows(
@@ -288,107 +306,85 @@ export default function DataTableEditor({
 		);
 
 	return (
-		<Modal
-			title={title}
-			onRequestClose={requestClose}
-			size="fill"
-			className="rkv-data-table-editor"
+		// eslint-disable-next-line jsx-a11y/no-static-element-interactions
+		<div
+			className={classnames("rkv-data-table-editor", className)}
 			onKeyDown={onKeyDown}
-			headerActions={
-				<>
-					{!readOnly && (
-						<div className="rkv-data-table-editor__group">
-							<Button variant="tertiary" onClick={addRow}>
-								{__("Add row", "rkv-editor-components")}
-							</Button>
-							<Button variant="tertiary" onClick={addColumn}>
-								{__("Add column", "rkv-editor-components")}
-							</Button>
-						</div>
-					)}
-					<div className="rkv-data-table-editor__group">
-						<Button
-							icon={undoIcon}
-							label={__("Undo", "rkv-editor-components")}
-							onClick={undo}
-							disabled={!undoManager.hasUndo()}
-							accessibleWhenDisabled
-						/>
-						<Button
-							icon={redoIcon}
-							label={__("Redo", "rkv-editor-components")}
-							onClick={redo}
-							disabled={!undoManager.hasRedo()}
-							accessibleWhenDisabled
-						/>
-					</div>
-					{!readOnly && (
-						<div className="rkv-data-table-editor__group">
-							<Button
-								icon={uploadIcon}
-								label={__("Import Excel or CSV file", "rkv-editor-components")}
-								onClick={() => fileInput.current.click()}
-							/>
-							<input
-								ref={fileInput}
-								type="file"
-								accept=".xlsx,.csv,.tsv,.txt"
-								hidden
-								onChange={importFile}
-							/>
-							<Dropdown
-								popoverProps={{ placement: "bottom-end" }}
-								renderToggle={({ isOpen, onToggle }) => (
-									<Button
-										icon={clipboardPaste}
-										label={__("Paste CSV", "rkv-editor-components")}
-										onClick={onToggle}
-										aria-expanded={isOpen}
-									/>
-								)}
-								renderContent={({ onClose: closePopover }) => (
-									<div className="rkv-data-table-editor__paste">
-										<TextareaControl
-											__nextHasNoMarginBottom
-											label={__(
-												"Paste CSV or spreadsheet data",
-												"rkv-editor-components",
-											)}
-											rows={6}
-											value=""
-											onChange={() => {}}
-											onPaste={(e) => {
-												e.preventDefault();
-												importText(
-													e.clipboardData.getData("text"),
-													closePopover,
-												);
-											}}
-										/>
-									</div>
-								)}
-							/>
-						</div>
-					)}
-					<div className="rkv-data-table-editor__group">
-						<Button variant="tertiary" onClick={requestClose}>
-							{__("Cancel", "rkv-editor-components")}
-						</Button>
-						<Button
-							variant="primary"
-							onClick={() =>
-								onSave(
-									rows,
-									Array.from({ length: columnCount }, (_, i) => formatAt(i)),
-								)
-							}
-						>
-							{__("Apply", "rkv-editor-components")}
-						</Button>
-					</div>
-				</>
-			}
 		>
+			<div className="rkv-data-table-editor__toolbar">
+				{!readOnly && (
+					<div className="rkv-data-table-editor__group">
+						<Button variant="tertiary" size="compact" onClick={addRow}>
+							{__("Add row", "rkv-editor-components")}
+						</Button>
+						<Button variant="tertiary" size="compact" onClick={addColumn}>
+							{__("Add column", "rkv-editor-components")}
+						</Button>
+					</div>
+				)}
+				<div className="rkv-data-table-editor__group">
+					<Button
+						icon={undoIcon}
+						label={__("Undo", "rkv-editor-components")}
+						onClick={undo}
+						disabled={!undoManager.hasUndo()}
+						accessibleWhenDisabled
+					/>
+					<Button
+						icon={redoIcon}
+						label={__("Redo", "rkv-editor-components")}
+						onClick={redo}
+						disabled={!undoManager.hasRedo()}
+						accessibleWhenDisabled
+					/>
+				</div>
+				{!readOnly && (
+					<div className="rkv-data-table-editor__group">
+						<Button
+							icon={uploadIcon}
+							label={__("Import Excel or CSV file", "rkv-editor-components")}
+							onClick={() => fileInput.current.click()}
+						/>
+						<input
+							ref={fileInput}
+							type="file"
+							accept=".xlsx,.csv,.tsv,.txt"
+							hidden
+							onChange={importFile}
+						/>
+						<Dropdown
+							popoverProps={{ placement: "bottom-end" }}
+							renderToggle={({ isOpen, onToggle }) => (
+								<Button
+									icon={clipboardPaste}
+									label={__("Paste CSV", "rkv-editor-components")}
+									onClick={onToggle}
+									aria-expanded={isOpen}
+								/>
+							)}
+							renderContent={({ onClose: closePopover }) => (
+								<div className="rkv-data-table-editor__paste">
+									<TextareaControl
+										__nextHasNoMarginBottom
+										label={__(
+											"Paste CSV or spreadsheet data",
+											"rkv-editor-components",
+										)}
+										rows={6}
+										value=""
+										onChange={() => {}}
+										onPaste={(e) => {
+											e.preventDefault();
+											importText(e.clipboardData.getData("text"), closePopover);
+										}}
+									/>
+								</div>
+							)}
+						/>
+					</div>
+				)}
+			</div>
+
 			{readOnly && (
 				<Notice status="info" isDismissible={false}>
 					{readOnlyNotice}
@@ -399,102 +395,102 @@ export default function DataTableEditor({
 					{importError}
 				</Notice>
 			)}
-			<table ref={tableRef} className="rkv-data-table-editor__table">
-				<thead>
-					<tr>
-						<th />
-						{rows[0].map((_, c) => (
-							<th key={c}>
-								<div className="rkv-data-table-editor__column-head">
+
+			<div className="rkv-data-table-editor__scroll">
+				<table ref={tableRef} className="rkv-data-table-editor__table">
+					<thead>
+						<tr>
+							<th />
+							{rows[0].map((_, c) => (
+								<th key={c}>
+									<div className="rkv-data-table-editor__column-head">
+										{!readOnly && (
+											<Button
+												isDestructive
+												size="small"
+												onClick={() => removeColumn(c)}
+												disabled={columnCount < 2}
+												label={__("Remove column", "rkv-editor-components")}
+												showTooltip
+											>
+												×
+											</Button>
+										)}
+										<span className="rkv-data-table-editor__column-move">
+											{!readOnly && c > 0 && (
+												<Button
+													size="small"
+													icon={chevronLeft}
+													data-move="left"
+													onClick={() => moveColumn(c, -1)}
+													label={__(
+														"Move column left",
+														"rkv-editor-components",
+													)}
+													showTooltip
+												/>
+											)}
+											{!readOnly && c < columnCount - 1 && (
+												<Button
+													size="small"
+													icon={chevronRight}
+													data-move="right"
+													onClick={() => moveColumn(c, 1)}
+													label={__(
+														"Move column right",
+														"rkv-editor-components",
+													)}
+													showTooltip
+												/>
+											)}
+										</span>
+									</div>
+								</th>
+							))}
+						</tr>
+					</thead>
+					<tbody>
+						{rows.map((row, r) => (
+							<tr key={r} className={r === 0 ? "is-header" : undefined}>
+								<th>
 									{!readOnly && (
 										<Button
 											isDestructive
 											size="small"
-											onClick={() => removeColumn(c)}
-											disabled={columnCount < 2}
-											label={__("Remove column", "rkv-editor-components")}
+											onClick={() => removeRow(r)}
+											disabled={r === 0 || rows.length < 2}
+											label={__("Remove row", "rkv-editor-components")}
 											showTooltip
 										>
 											×
 										</Button>
 									)}
-									<span className="rkv-data-table-editor__column-move">
-										{!readOnly && c > 0 && (
-											<Button
-												size="small"
-												icon={chevronLeft}
-												data-move="left"
-												onClick={() => moveColumn(c, -1)}
-												label={__("Move column left", "rkv-editor-components")}
-												showTooltip
-											/>
-										)}
-										{!readOnly && c < columnCount - 1 && (
-											<Button
-												size="small"
-												icon={chevronRight}
-												data-move="right"
-												onClick={() => moveColumn(c, 1)}
-												label={__("Move column right", "rkv-editor-components")}
-												showTooltip
-											/>
-										)}
-									</span>
-								</div>
-							</th>
-						))}
-					</tr>
-				</thead>
-				<tbody>
-					{rows.map((row, r) => (
-						<tr key={r} className={r === 0 ? "is-header" : undefined}>
-							<th>
-								{!readOnly && (
-									<Button
-										isDestructive
-										size="small"
-										onClick={() => removeRow(r)}
-										disabled={r === 0 || rows.length < 2}
-										label={__("Remove row", "rkv-editor-components")}
-										showTooltip
-									>
-										×
-									</Button>
-								)}
-							</th>
-							{row.map((cell, c) => (
-								<td key={c} className={r === 0 ? "has-format" : undefined}>
-									<input
-										type="text"
-										value={cell}
-										readOnly={readOnly}
-										aria-label={`${__("Row", "rkv-editor-components")} ${r + 1}, ${__("column", "rkv-editor-components")} ${c + 1}`}
-										onChange={(e) => setCell(r, c, e.target.value)}
-										onPaste={(e) => onCellPaste(e, r, c)}
-									/>
-									{r === 0 && (
-										<FormatPill
-											value={formatAt(c)}
-											formats={formatOptions}
-											defaultFormat={DEFAULT_FORMAT}
-											onChange={(slug) => setFormat(c, slug)}
+								</th>
+								{row.map((cell, c) => (
+									<td key={c} className={r === 0 ? "has-format" : undefined}>
+										<input
+											type="text"
+											value={cell}
+											readOnly={readOnly}
+											aria-label={`${__("Row", "rkv-editor-components")} ${r + 1}, ${__("column", "rkv-editor-components")} ${c + 1}`}
+											onChange={(e) => setCell(r, c, e.target.value)}
+											onPaste={(e) => onCellPaste(e, r, c)}
 										/>
-									)}
-								</td>
-							))}
-						</tr>
-					))}
-				</tbody>
-			</table>
-
-			<ConfirmDialog
-				isOpen={confirmingClose}
-				confirmButtonText={__("Discard", "rkv-editor-components")}
-				onConfirm={onClose}
-				onCancel={() => setConfirmingClose(false)}
-			>
-				{__("Discard your changes to the table?", "rkv-editor-components")}
-			</ConfirmDialog>
+										{r === 0 && (
+											<FormatPill
+												value={formatAt(c)}
+												formats={formatOptions}
+												defaultFormat={DEFAULT_FORMAT}
+												onChange={(slug) => setFormat(c, slug)}
+											/>
+										)}
+									</td>
+								))}
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</div>
 
 			<ConfirmDialog
 				isOpen={!!pending}
@@ -510,6 +506,6 @@ export default function DataTableEditor({
 					"rkv-editor-components",
 				)}
 			</ConfirmDialog>
-		</Modal>
+		</div>
 	);
 }

@@ -5,6 +5,7 @@ export { default as ClampControl } from "./clamp-control/index.js";
 export { default as LinkedControls } from "./linked-controls/index.js";
 export { default as FormatPill } from "./format-pill/index.js";
 export { default as DataTableEditor } from "./data-table-editor/index.js";
+export { default as DataTableEditorModal } from "./data-table-editor/modal.js";
 export {
 	DEFAULT_FORMAT,
 	DEFAULT_FORMATS,

@@ -35,7 +35,7 @@ export default {
 	component: LinkedControls,
 	render: (args) => <Playground {...args} />,
 	args: {
-		linkedLabel: "Width",
+		linkedLabel: "Distance",
 		fields: [
 			{ key: "x", label: "Horizontal" },
 			{ key: "y", label: "Vertical" },
