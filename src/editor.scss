@@ -2,3 +2,8 @@
 // Each component also imports its own styles, so most consumers don't need this.
 @use "./post-select-modal/editor" as post-select-modal;
 @use "./post-search-field/editor" as post-search-field;
+@use "./style-indicator/editor" as style-indicator;
+@use "./clamp-control/editor" as clamp-control;
+@use "./linked-controls/editor" as linked-controls;
+@use "./format-pill/editor" as format-pill;
+@use "./data-table-editor/editor" as data-table-editor;

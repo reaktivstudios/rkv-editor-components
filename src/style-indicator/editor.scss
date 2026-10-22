@@ -1,0 +1,49 @@
+// Mirrors core's border-control toggle: a 24px ring around a 16px indicator.
+.rkv-style-indicator {
+	box-sizing: border-box;
+	display: block;
+	flex: none;
+	width: 24px;
+	height: 24px;
+	padding: 2px;
+	border: 2px solid transparent;
+	border-radius: 50%;
+
+	&::before {
+		content: "";
+		display: block;
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+		background: var(--rkv-style-indicator--color);
+		box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+	}
+
+	// Same slash core uses for "no color".
+	&.is-empty::before {
+		background: linear-gradient(
+			-45deg,
+			transparent 48%,
+			rgb(0 0 0 / 20%) 48%,
+			rgb(0 0 0 / 20%) 52%,
+			transparent 52%
+		);
+	}
+
+	// Outline and line style are one ring: the outline sets its color, the line style its dashes.
+	&.has-outline,
+	&.has-line-style {
+		border-color: var(
+			--rkv-style-indicator--outline,
+			var(--rkv-editor-components--ink, #111214)
+		);
+	}
+
+	&.has-line-style {
+		border-style: dashed;
+	}
+
+	&.is-line-dotted {
+		border-style: dotted;
+	}
+}

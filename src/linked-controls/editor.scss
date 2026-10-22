@@ -1,0 +1,21 @@
+.rkv-linked-controls {
+	position: relative;
+
+	&__toggle {
+		position: absolute;
+		top: 0;
+		right: 0;
+		z-index: 1;
+	}
+
+	// Match the 24px toggle so label and icon share a center line.
+	.components-base-control__label {
+		display: flex;
+		align-items: center;
+		min-height: 24px;
+	}
+
+	&__item + &__item {
+		margin-top: 16px;
+	}
+}

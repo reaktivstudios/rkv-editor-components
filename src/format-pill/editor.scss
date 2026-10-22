@@ -1,0 +1,33 @@
+.rkv-format-pill__toggle.components-button {
+	height: 28px;
+	min-width: 56px;
+	padding: 0 14px;
+	justify-content: center;
+	border-radius: 10px;
+	background: var(--rkv-editor-components--accent-bg, #e0ebf9);
+	color: var(--rkv-editor-components--accent-ink, #061a4c);
+	font-size: 13px;
+	font-weight: 500;
+
+	&:hover:not(:disabled),
+	&[aria-expanded="true"] {
+		background: var(--rkv-editor-components--accent-bg-hover, #cfdff5);
+		color: var(--rkv-editor-components--accent-ink, #061a4c);
+	}
+}
+
+.components-dropdown-menu__menu-item:has(.rkv-format-pill__item) {
+	width: 100%;
+}
+
+.rkv-format-pill__item {
+	display: flex;
+	justify-content: space-between;
+	gap: 24px;
+	width: 100%;
+}
+
+.rkv-format-pill__preview {
+	opacity: 0.6;
+	font-variant-numeric: tabular-nums;
+}
