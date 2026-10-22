@@ -1,0 +1,220 @@
+// Built from core's RangeControl: a transparent input drives a drawn thumb, so the
+// same 12px thumb, 4px rail, shadow, focus halo and tooltip carry over.
+$thumb: 12px;
+$rail: 4px;
+$height: 30px;
+$accent: var(
+	--wp-components-color-accent,
+	var(--wp-admin-theme-color, #3858e9)
+);
+
+.rkv-clamp-control {
+	&__track {
+		position: relative;
+		height: $height;
+		margin: 5px 0;
+		// Above the number fields below, so the tooltip isn't cut off.
+		z-index: 2;
+		cursor: pointer;
+		touch-action: none;
+
+		// The rail, with the band between min and max filled.
+		&::before {
+			content: "";
+			position: absolute;
+			top: ($height - $rail) * 0.5;
+			left: 0;
+			right: 0;
+			height: $rail;
+			border-radius: 9999px;
+			background: linear-gradient(
+				to right,
+				var(--rkv-editor-components--border, #ddd) var(--rkv-clamp-from),
+				$accent var(--rkv-clamp-from) var(--rkv-clamp-to),
+				var(--rkv-editor-components--border, #ddd) var(--rkv-clamp-to)
+			);
+		}
+	}
+
+	// Half a thumb wider each side, like core, so a thumb's center reaches the rail's ends.
+	&__input {
+		position: absolute;
+		top: 0;
+		left: -$thumb * 0.5;
+		width: calc(100% + #{$thumb});
+		height: 100%;
+		margin: 0;
+		opacity: 0;
+		outline: none;
+		// Keyboard and screen readers only; the track handles the pointer.
+		pointer-events: none;
+		appearance: none;
+
+		&::-webkit-slider-thumb {
+			width: $thumb;
+			height: $thumb;
+			appearance: none;
+		}
+
+		&::-moz-range-thumb {
+			width: $thumb;
+			height: $thumb;
+		}
+	}
+
+	&__thumb {
+		position: absolute;
+		top: ($height - $thumb) * 0.5;
+		width: $thumb;
+		height: $thumb;
+		pointer-events: none;
+		z-index: 3;
+
+		// Core's focus halo, over the rail like the thumb itself.
+		&::before {
+			content: "";
+			display: none;
+			position: absolute;
+			inset: -4px;
+			background: $accent;
+			opacity: 0.4;
+		}
+
+		&.is-ideal {
+			transform: translateX(-50%);
+		}
+
+		&.is-max {
+			transform: translateX(-100%);
+		}
+
+		&.is-ideal::before,
+		&.is-ideal .rkv-clamp-control__shape::after {
+			border-radius: 50%;
+		}
+
+		&.is-min::before,
+		&.is-min .rkv-clamp-control__shape::after {
+			clip-path: polygon(0 0, 100% 50%, 0 100%);
+		}
+
+		&.is-max::before,
+		&.is-max .rkv-clamp-control__shape::after {
+			clip-path: polygon(100% 0, 0 50%, 100% 100%);
+		}
+	}
+
+	// The shadow goes on the shape alone: a filter on the whole thumb would also shadow the halo.
+	&__shape {
+		position: absolute;
+		inset: 0;
+		filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.2));
+
+		&::after {
+			content: "";
+			position: absolute;
+			inset: 0;
+			background: $accent;
+		}
+	}
+
+	&__input:focus + &__thumb {
+		z-index: 4;
+
+		&::before {
+			display: block;
+		}
+
+		.rkv-clamp-control__tooltip {
+			opacity: 1;
+		}
+	}
+
+	// Below the thumb, fading in, as in core.
+	&__tooltip {
+		position: absolute;
+		bottom: -($height - $thumb) * 0.5 - 24px;
+		left: 50%;
+		z-index: 100;
+		min-width: 32px;
+		padding: 4px 8px;
+		border-radius: 2px;
+		background: rgba(0, 0, 0, 0.8);
+		color: #fff;
+		font-size: 12px;
+		line-height: 1.4;
+		text-align: center;
+		opacity: 0;
+		transform: translateX(-50%);
+		pointer-events: none;
+		user-select: none;
+
+		@media not (prefers-reduced-motion) {
+			transition: opacity 120ms ease;
+		}
+	}
+
+	&__values {
+		display: flex;
+		justify-content: space-between;
+		font-size: 12px;
+		font-variant-numeric: tabular-nums;
+		color: var(--rkv-editor-components--muted, #757575);
+	}
+
+	&__fields {
+		display: flex;
+		gap: 8px;
+	}
+
+	&__field {
+		flex: 1;
+		min-width: 0;
+	}
+
+	&__glyph,
+	&__unit {
+		padding: 0 4px;
+		font-size: 11px;
+		color: var(--rkv-editor-components--muted, #757575);
+	}
+
+	&__reset {
+		margin-top: 8px;
+	}
+
+	// Marks sit on the rail; labels hang below it, as in core.
+	&.is-marked &__track {
+		margin-bottom: 25px;
+	}
+
+	&__mark {
+		position: absolute;
+		top: ($height - $rail) * 0.5;
+		width: 2px;
+		height: $rail;
+		background: #fff;
+		transform: translateX(-50%);
+		pointer-events: none;
+		z-index: 1;
+	}
+
+	&__mark-label {
+		position: absolute;
+		top: $height - 4px;
+		font-size: 11px;
+		white-space: nowrap;
+		color: var(--rkv-editor-components--border, #ddd);
+		transform: translateX(-50%);
+		pointer-events: none;
+
+		&.is-filled {
+			color: var(--rkv-editor-components--ink, #111214);
+		}
+	}
+
+	&.is-disabled &__track {
+		cursor: default;
+		opacity: 0.5;
+	}
+}

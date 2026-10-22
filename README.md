@@ -28,6 +28,12 @@ To load every component's styles yourself instead, use `@reaktiv/editor-componen
 | --- | --- |
 | [`PostSelectModal`](src/post-select-modal/README.md) | A modal for searching and selecting posts. |
 | [`PostSearchField`](src/post-search-field/README.md) | A search field that selects a single post from `queryArgs`-driven suggestions. |
+| [`DataTableEditor`](src/data-table-editor/README.md) | A modal spreadsheet for editing a table: paste, CSV/.xlsx import, reorder, undo/redo, column formats. |
+| [`FormatPill`](src/format-pill/README.md) | A pill that shows a column's format and opens a menu to change it. |
+| [`ClampControl`](src/clamp-control/README.md) | A three-thumb range control (min, ideal, max) like CSS `clamp()`. |
+| [`LinkedControls`](src/linked-controls/README.md) | One control for two values until unlinked, then one per value. |
+| [`StyleIndicator`](src/style-indicator/README.md) | A small circle that previews a color, outline and line style. |
+| [`swatchBorder`, `resolveColor`](src/contrast/README.md) | Helpers that keep pale swatches visible (WCAG 3:1). |
 
 Each component's README documents its props.
 

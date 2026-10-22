@@ -1,0 +1,92 @@
+.rkv-data-table-editor {
+	&__group {
+		display: flex;
+		align-items: center;
+		margin-inline-end: 16px;
+
+		&:last-child {
+			margin-inline-end: 0;
+		}
+	}
+
+	&__paste {
+		width: 280px;
+		padding: 16px;
+	}
+
+	&__table {
+		border-collapse: collapse;
+
+		td {
+			position: relative;
+			padding: 0;
+		}
+
+		// Overlay: borders drawn on the cell itself get painted over by the
+		// full-width inputs.
+		td::after {
+			content: "";
+			position: absolute;
+			inset: 0;
+			border: 0 solid var(--rkv-editor-components--border, #ddd);
+			border-inline-end-width: 1px;
+			border-block-end-width: 1px;
+			pointer-events: none;
+		}
+
+		.is-header td::after {
+			border-block-start-width: 1px;
+		}
+
+		td:first-of-type::after {
+			border-inline-start-width: 1px;
+		}
+
+		td.has-format {
+			.rkv-format-pill {
+				position: absolute;
+				inset-block: 0;
+				inset-inline-end: 8px;
+				display: flex;
+				align-items: center;
+			}
+
+			input {
+				padding-inline-end: 84px;
+			}
+		}
+
+		input {
+			box-sizing: border-box;
+			width: 100%;
+			min-width: 120px;
+			border: 0;
+			border-radius: 0;
+			box-shadow: none;
+		}
+
+		.is-header input {
+			font-weight: 600;
+			background: var(--rkv-editor-components--surface, #f6f7f7);
+		}
+
+		// The first column holds each row's label, so it reads as a header too.
+		td:first-of-type input {
+			background: var(--rkv-editor-components--surface, #f6f7f7);
+		}
+	}
+
+	&__column-head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 2px;
+		padding: 4px;
+	}
+
+	&__column-move {
+		display: flex;
+		gap: 2px;
+		margin-left: auto;
+	}
+}
