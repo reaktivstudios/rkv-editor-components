@@ -1,4 +1,5 @@
 export { default as PostSelectModal } from "./post-select-modal/index.js";
+export { default as __experimentalPostSelectModal } from "./post-select-modal/dataviews-modal.js";
 export { default as PostSearchField } from "./post-search-field/index.js";
 export { default as StyleIndicator } from "./style-indicator/index.js";
 export { default as ClampControl } from "./clamp-control/index.js";

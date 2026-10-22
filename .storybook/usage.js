@@ -34,7 +34,7 @@ const attr = (key, value) => {
  * the state and handlers a consumer would write around them are hand-written.
  *
  * @param {Object}                    options
- * @param {string[]}                  options.imports   Package exports to import, the component first.
+ * @param {string[]}                  options.imports   Package exports to import, the component first; "a as B" aliases an export.
  * @param {string}                    [options.react]   Extra import lines.
  * @param {string|Function}           [options.state]   Code before the JSX; a function receives the story's args.
  * @param {string[]|Function}         [options.extra]   Props written by hand, after the args' props.
@@ -44,7 +44,7 @@ const attr = (key, value) => {
 export const usage =
 	({ imports, react = "", state = "", extra = [], children = "", omit = [] }) =>
 	(_code, { args }) => {
-		const [name] = imports;
+		const name = imports[0].split(" as ").pop();
 		const resolve = (v) => (typeof v === "function" ? v(args) : v);
 		const extras = resolve(extra);
 		const props = [
