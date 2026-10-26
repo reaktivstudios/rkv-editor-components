@@ -1,0 +1,32 @@
+.rkv-image-picker {
+	.rkv-image-picker__preview {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		height: auto;
+		padding: 0;
+		overflow: hidden;
+		border: 1px dashed #949494;
+		border-radius: 2px;
+		background: #f0f0f0;
+
+		&.has-image {
+			border-style: solid;
+			border-color: #0000001a;
+			background: none;
+		}
+
+		img {
+			display: block;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			object-position: 50% 50%;
+		}
+	}
+
+	.rkv-image-picker__actions {
+		margin-top: 8px;
+	}
+}

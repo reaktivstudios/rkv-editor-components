@@ -1,6 +1,11 @@
 // All component styles in one file, for consumers that load them separately.
 // Each component also imports its own styles, so most consumers don't need this.
 @use "./post-select-modal/editor" as post-select-modal;
+@use "./term-select-modal/editor" as term-select-modal;
+@use "./image-picker/editor" as image-picker;
+@use "./pattern-picker/editor" as pattern-picker;
+@use "./draggable-list/editor" as draggable-list;
+@use "./lightbox/editor" as lightbox;
 @use "./post-search-field/editor" as post-search-field;
 @use "./style-indicator/editor" as style-indicator;
 @use "./clamp-control/editor" as clamp-control;

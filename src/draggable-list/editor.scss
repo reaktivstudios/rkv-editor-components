@@ -1,0 +1,56 @@
+.rkv-draggable-list {
+	display: flex;
+
+	&--vertical {
+		flex-direction: column;
+	}
+
+	// Let the item receive the drop instead of whatever is inside it.
+	&.has-dragging > .rkv-draggable-list__item > * {
+		pointer-events: none;
+		user-select: none;
+	}
+
+	.rkv-draggable-list__item.is-draggable {
+		--rkv-draggable-list-background: transparent;
+		background-color: var(--rkv-draggable-list-background);
+		border-radius: 2px;
+		cursor: move;
+		outline: var(--rkv-draggable-list-outline-width, 6px) solid
+			var(--rkv-draggable-list-background);
+		transition:
+			transform 0.3s cubic-bezier(0.17, 0.73, 0.14, 1),
+			background-color 0.3s cubic-bezier(0.17, 0.73, 0.14, 1),
+			outline-color 0.3s cubic-bezier(0.17, 0.73, 0.14, 1);
+		user-select: none;
+
+		&:hover {
+			--rkv-draggable-list-background: color-mix(
+				in srgb,
+				var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9)) 4%,
+				#0000
+			);
+		}
+
+		&:focus {
+			--rkv-draggable-list-background: color-mix(
+				in srgb,
+				var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9)) 4%,
+				#0000
+			);
+			outline: 3px solid
+				var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
+			outline-offset: 2px;
+			z-index: 1;
+		}
+
+		&.is-dragging {
+			cursor: grabbing;
+		}
+
+		&.is-over {
+			opacity: 0.5;
+			transform: scale(0.9);
+		}
+	}
+}
