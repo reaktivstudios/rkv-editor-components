@@ -1,0 +1,114 @@
+.rkv-lightbox {
+	.components-modal__content {
+		// Media beside the caption on wide screens, stacked on narrow ones.
+		> div:last-child {
+			display: grid;
+			gap: 24px;
+			grid-template-columns: 1fr;
+			align-items: start;
+
+			@media (min-width: 782px) {
+				grid-template-columns: 1fr clamp(140px, 22%, 290px);
+				align-items: center;
+			}
+		}
+	}
+
+	.rkv-lightbox__media {
+		display: grid;
+		overflow: hidden;
+		position: relative;
+		min-width: 0;
+	}
+
+	.rkv-lightbox__items {
+		display: flex;
+		transform: translateX(calc(var(--rkv-lightbox-index, 0) * -100%));
+		transition: transform 0.3s ease;
+
+		@media (prefers-reduced-motion: reduce) {
+			transition: none;
+		}
+
+		[dir="rtl"] & {
+			transform: translateX(calc(var(--rkv-lightbox-index, 0) * 100%));
+		}
+	}
+
+	.rkv-lightbox__item {
+		align-items: center;
+		display: flex;
+		flex: 0 0 100%;
+		justify-content: center;
+		min-width: 0;
+
+		// Keep slides that aren't showing out of the tab order, once the slide transition ends.
+		&[aria-hidden="true"] {
+			transition: visibility 0s linear 0.3s;
+			visibility: hidden;
+		}
+
+		> img,
+		> video {
+			height: auto;
+			max-height: 60vh;
+			max-width: 100%;
+			object-fit: scale-down;
+		}
+
+		> iframe {
+			aspect-ratio: 16 / 9;
+			border: 0;
+			max-height: 60vh;
+			width: 100%;
+		}
+	}
+
+	.rkv-lightbox__dots {
+		bottom: 12px;
+		display: flex;
+		gap: 12px;
+		justify-content: center;
+		left: 0;
+		position: absolute;
+		right: 0;
+	}
+
+	.rkv-lightbox__dot {
+		appearance: none;
+		background: #fff;
+		border: 0;
+		box-shadow: 0 0 0 1px #0000008c;
+		border-radius: 50%;
+		cursor: pointer;
+		height: 10px;
+		padding: 0;
+		width: 10px;
+
+		&.is-active {
+			background: var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
+		}
+
+		&:focus-visible {
+			outline: 2px solid var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
+			outline-offset: 2px;
+		}
+	}
+
+	.rkv-lightbox__content {
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+		justify-content: space-between;
+	}
+
+	.rkv-lightbox__caption {
+		font-size: 14px;
+		font-weight: 500;
+	}
+
+	.rkv-lightbox__navigation {
+		display: flex;
+		justify-content: space-between;
+	}
+}

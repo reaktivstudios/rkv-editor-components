@@ -33,6 +33,7 @@ To load every component's styles yourself instead, use `@reaktiv/editor-componen
 | [`DraggableList`](src/draggable-list/README.md) | A list whose items reorder by dragging or with the arrow keys. |
 | [`MediaSourceControl`](src/media-source-control/README.md) | Inspector panels for choosing an image, self-hosted video (with poster and captions) or YouTube video, plus playback settings. |
 | [`ViewportMediaControls`](src/viewport-media-controls/README.md) | `MediaSourceControl` panels for desktop media, with optional tablet and mobile overrides. |
+| [`Lightbox`](src/lightbox/README.md) | A modal that steps through images, videos, or embeds, with arrows, dots, and captions. |
 | [`PostSearchField`](src/post-search-field/README.md) | A search field that selects a single post from `queryArgs`-driven suggestions. |
 | [`DataTableEditor`](src/data-table-editor/README.md) | A modal spreadsheet for editing a table: paste, CSV/.xlsx import, reorder, undo/redo, column formats. |
 | [`FormatPill`](src/format-pill/README.md) | A pill that shows a column's format and opens a menu to change it. |
