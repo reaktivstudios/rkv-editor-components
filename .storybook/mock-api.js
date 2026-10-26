@@ -67,18 +67,18 @@ const TAXONOMIES = {
 
 const TERMS = {
 	categories: [
-		{ id: 1, name: "News", slug: "news" },
-		{ id: 2, name: "Sports", slug: "sports" },
-		{ id: 3, name: "Science", slug: "science" },
+		{ id: 1, name: "News", slug: "news", count: 12 },
+		{ id: 2, name: "Sports", slug: "sports", count: 8 },
+		{ id: 3, name: "Science", slug: "science", count: 5 },
 	],
 	tags: [
-		{ id: 11, name: "Featured", slug: "featured" },
-		{ id: 12, name: "Analysis", slug: "analysis" },
+		{ id: 11, name: "Featured", slug: "featured", count: 3 },
+		{ id: 12, name: "Analysis", slug: "analysis", count: 0 },
 	],
 	show: [
-		{ id: 21, name: "Morning Report", slug: "morning-report" },
-		{ id: 22, name: "Evening Edition", slug: "evening-edition" },
-		{ id: 23, name: "Weekend Review", slug: "weekend-review" },
+		{ id: 21, name: "Morning Report", slug: "morning-report", count: 9 },
+		{ id: 22, name: "Evening Edition", slug: "evening-edition", count: 6 },
+		{ id: 23, name: "Weekend Review", slug: "weekend-review", count: 1 },
 	],
 };
 
@@ -233,6 +233,7 @@ const sortRecords = (records, args) => {
 		date: (a, b) => a.date_gmt.localeCompare(b.date_gmt) * direction,
 		modified: (a, b) => a.modified_gmt.localeCompare(b.modified_gmt) * direction,
 		title: (a, b) => titleOf(a).localeCompare(titleOf(b)) * direction,
+		name: (a, b) => titleOf(a).localeCompare(titleOf(b)) * direction,
 		id: (a, b) => (a.id - b.id) * direction,
 		include: (a, b) => include.indexOf(a.id) - include.indexOf(b.id),
 		relevance: (a, b) =>
