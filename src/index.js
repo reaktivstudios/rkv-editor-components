@@ -13,6 +13,7 @@ export {
 	DEFAULT_MEDIA,
 } from "./viewport-media-controls/index.js";
 export { default as Lightbox } from "./lightbox/index.js";
+export { default as MetaControl, useMetaValue } from "./meta-control/index.js";
 export { default as PostSearchField } from "./post-search-field/index.js";
 export { default as StyleIndicator } from "./style-indicator/index.js";
 export { default as ClampControl } from "./clamp-control/index.js";
