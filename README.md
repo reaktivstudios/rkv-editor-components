@@ -31,6 +31,8 @@ To load every component's styles yourself instead, use `@reaktiv/editor-componen
 | [`ImagePicker`](src/image-picker/README.md) | An image field with a preview, Replace and Remove, storing the attachment ID. |
 | [`PatternPicker`](src/pattern-picker/README.md) | A block toolbar button that swaps a block's inner blocks for a pattern registered to it. |
 | [`DraggableList`](src/draggable-list/README.md) | A list whose items reorder by dragging or with the arrow keys. |
+| [`MediaSourceControl`](src/media-source-control/README.md) | Inspector panels for choosing an image, self-hosted video (with poster and captions) or YouTube video, plus playback settings. |
+| [`ViewportMediaControls`](src/viewport-media-controls/README.md) | `MediaSourceControl` panels for desktop media, with optional tablet and mobile overrides. |
 | [`PostSearchField`](src/post-search-field/README.md) | A search field that selects a single post from `queryArgs`-driven suggestions. |
 | [`DataTableEditor`](src/data-table-editor/README.md) | A modal spreadsheet for editing a table: paste, CSV/.xlsx import, reorder, undo/redo, column formats. |
 | [`FormatPill`](src/format-pill/README.md) | A pill that shows a column's format and opens a menu to change it. |
