@@ -6,6 +6,7 @@ export {
 	default as PatternPicker,
 	usePatternsForBlock,
 } from "./pattern-picker/index.js";
+export { default as DraggableList } from "./draggable-list/index.js";
 export { default as PostSearchField } from "./post-search-field/index.js";
 export { default as StyleIndicator } from "./style-indicator/index.js";
 export { default as ClampControl } from "./clamp-control/index.js";

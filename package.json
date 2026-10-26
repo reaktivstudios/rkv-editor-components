@@ -48,6 +48,7 @@
 		"access": "public"
 	},
 	"peerDependencies": {
+		"@wordpress/a11y": ">=4",
 		"@wordpress/block-editor": ">=14",
 		"@wordpress/components": ">=28",
 		"@wordpress/compose": ">=7",
@@ -73,6 +74,7 @@
 		"@storybook/react-vite": "^10.6.0",
 		"@testing-library/dom": "^10.4.2",
 		"@testing-library/react": "^16.3.3",
+		"@wordpress/a11y": "^4.56.0",
 		"@wordpress/api-fetch": "^7.56.0",
 		"@wordpress/babel-preset-default": "^8.56.0",
 		"@wordpress/block-editor": "^18.0.0",
@@ -98,6 +100,9 @@
 		"vite": "^8.3.1"
 	},
 	"peerDependenciesMeta": {
+		"@wordpress/a11y": {
+			"optional": true
+		},
 		"@wordpress/block-editor": {
 			"optional": true
 		},
